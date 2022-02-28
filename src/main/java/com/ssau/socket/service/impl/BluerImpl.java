@@ -12,7 +12,7 @@ import java.io.IOException;
 public class BluerImpl implements Bluer {
 
     @Override
-    public byte[] blurring(byte[] byteOfImage){
+    public byte[] blurring(byte[] byteOfImage) {
         BufferedImage image = getBufferedImage(byteOfImage);
 
         int h = image.getHeight();
@@ -37,15 +37,26 @@ public class BluerImpl implements Bluer {
                             b[(m + 1) * (n + 1)] = pixel[2];
                         }
                     }
-                    r=sort9(r);
-                    g=sort9(g);
-                    b=sort9(b);
+                    r = sort9(r);
+                    g = sort9(g);
+                    b = sort9(b);
                     resultRaster.setPixel(i, j, new int[]{r[4], g[4], b[4], 255});
                 }
             }
         }
         result.setData(resultRaster);
         return byteArrayOfImage(result);
+    }
+
+    public byte[] saltPepper(byte[] byteOfImage) {
+        int i = 0;
+        for (byte vol : byteOfImage) {
+            if (i % 17 == 0) {
+                vol = 0;
+            }
+            i++;
+        }
+        return byteOfImage;
     }
 
     public byte[] byteArrayOfImage(BufferedImage image) {
@@ -73,10 +84,10 @@ public class BluerImpl implements Bluer {
     public int[] sort9(int[] mass) {
         for (int i = 0; i < 8; i++) {
             for (int j = 1; j < 9; j++) {
-                if (mass[i]>mass[j]){
-                    mass[i]+=mass[j];
-                    mass[j]=-1*(mass[j]-mass[i]);
-                    mass[i]-=mass[j];
+                if (mass[i] > mass[j]) {
+                    mass[i] += mass[j];
+                    mass[j] = -1 * (mass[j] - mass[i]);
+                    mass[i] -= mass[j];
                 }
             }
         }
