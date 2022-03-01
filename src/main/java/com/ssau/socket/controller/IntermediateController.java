@@ -26,7 +26,7 @@ public class IntermediateController {
 
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     public void sendPhoto(@RequestBody PhotoDTO body) throws Exception {
-        ByteArrayOfImage byteArrayOfImage = new ByteArrayOfImage(bluer.saltPepper(body.getPhoto().getByteOfImage()));
-        photoService.sendResponse(new PhotoDTO(byteArrayOfImage,body.getPhotoFile()), "http://localhost:8081/client/start");
+        ByteArrayOfImage byteArrayOfImage = new ByteArrayOfImage(bluer.saltPepper(body.getByteOfImage()));
+        photoService.sendResponse(new PhotoDTO(byteArrayOfImage.getByteOfImage()), "http://localhost:8081/client/start");
     }
 }

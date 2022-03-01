@@ -27,22 +27,11 @@ public class PhotoService {
         File input = new File("image.jpg");
         BufferedImage inputImg = ImageIO.read(input);
         ByteArrayOfImage baoi = new ByteArrayOfImage(inputImg);
-        return new PhotoDTO(baoi, input);
+        return new PhotoDTO(baoi.getByteOfImage()/*, input*/);
     }
 
     public void sendResponse(PhotoDTO photo, String url){
         PhotoDTO postToInsert = photo;
-        //restTemplate.postForEntity(url, postToInsert, PhotoDTO.class);
-
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("imagefile", photo);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity(url, request, String.class);
-        System.out.println(stringResponseEntity.toString());
+        restTemplate.postForObject(url, postToInsert, PhotoDTO.class);
     }
 }

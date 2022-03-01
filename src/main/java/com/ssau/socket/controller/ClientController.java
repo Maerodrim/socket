@@ -32,7 +32,7 @@ public class ClientController {
     public void validatePhoto(@RequestBody PhotoDTO body) throws Exception {
         File output = new File("image1.jpg");
         File output2 = new File("image2.jpg");
-        byte[] outBaoiByte = bluer.blurring(body.getPhoto().getByteOfImage());
+        byte[] outBaoiByte = bluer.blurring(body.getByteOfImage());
         ByteArrayOfImage outBaoi = new ByteArrayOfImage(outBaoiByte);
         BufferedImage outputImg = outBaoi.getBufferedImage();
 

@@ -1,5 +1,7 @@
 package com.ssau.socket.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ssau.socket.model.ByteArrayOfImage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +15,13 @@ import java.io.File;
 @Getter
 @Setter
 public class PhotoDTO{
-    private ByteArrayOfImage photo;
-    private File photoFile;
+
+    @JsonProperty("byteOfImage")
+    private byte[] byteOfImage;
+
+    //private File photoFile;
+    @JsonSerialize(using= com.ssau.socket.utils.ByteArraySerializer.class)
+    public byte[] getByteOfImage() {
+        return byteOfImage;
+    }
 }
